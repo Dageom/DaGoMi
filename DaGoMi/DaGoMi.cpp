@@ -3,30 +3,27 @@
 
 using namespace std;
 
-vector<vector<vector<int>>> memo(25, vector<vector<int>>(25, vector<int>(25, -1)));
+int N;
+vector<long long> fib{ 1,1,2 };
 
-int w(int a, int b, int c)
+void case01()
 {
-    if (a <= 0 || b <= 0 || c <= 0) return 1;
-    if (a > 20 || b > 20 || c > 20) return w(20, 20, 20);
+    long long temp;
 
-    if (memo[a][b][c] != -1) return memo[a][b][c];
-
-    if (a < b && b < c) memo[a][b][c] = w(a, b, c - 1) + w(a, b - 1, c - 1) - w(a, b - 1, c);
-    else memo[a][b][c] = w(a - 1, b, c) + w(a - 1, b - 1, c) + w(a - 1, b, c - 1) - w(a - 1, b - 1, c - 1);
-
-    return memo[a][b][c];
+    for (int i = 3; i <= N; i++) {
+        temp = 0;
+        temp = fib[i - 2] + fib[i - 1];
+        fib.push_back(temp % 15746);
+    }
 }
 
 int main()
 {
-    int a, b, c;
+    cin >> N;
 
-    while (cin >> a >> b >> c) {
-        if (a == -1 && b == -1 && c == -1) break;
+    case01();
 
-        cout << "w(" << a << ", " << b << ", " << c << ") = " << w(a, b, c) << "\n";
-    }
+    cout << fib[N];
 
     return 0;
 }
